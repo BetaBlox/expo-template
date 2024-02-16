@@ -1,7 +1,4 @@
-import Button from "@/components/Button";
-import { Spacing } from "@/config/spacing";
-import { Typography } from "@/config/typography";
-import { Pressable, Text, View } from "react-native";
+import { View } from "react-native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import TextField, {
@@ -13,6 +10,25 @@ import { useAuth } from "@/hooks/useAuth";
 import Toast from "react-native-toast-message";
 import Api from "@/services/Api";
 import ScrollViewLayout from "@/layouts/ScrollViewLayout";
+import {
+  Heading,
+  Text,
+  Pressable,
+  Button,
+  ButtonText,
+  VStack,
+  AlertCircleIcon,
+  FormControl,
+  FormControlError,
+  FormControlErrorIcon,
+  FormControlErrorText,
+  FormControlHelper,
+  FormControlHelperText,
+  FormControlLabel,
+  FormControlLabelText,
+  Input,
+  InputField,
+} from "@gluestack-ui/themed";
 
 type FormData = {
   email: string;
@@ -55,12 +71,11 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <ScrollViewLayout>
-      <Text style={Typography.jumbo}>Login</Text>
-      <View
-        style={{
-          width: "100%",
-        }}
-      >
+      <Heading size="2xl" textAlign="center" marginBottom="$4">
+        Login
+      </Heading>
+
+      <VStack space="md" marginBottom="$10">
         <Controller
           control={control}
           rules={{
@@ -69,15 +84,31 @@ export default function LoginScreen({ navigation }) {
           name="email"
           render={({ field, fieldState, formState }) => {
             return (
-              <TextField
-                placeholder="Email"
-                value={field.value}
-                onChangeText={field.onChange}
-                onBlur={field.onBlur}
-                autoComplete={AutoComplete.EMAIL}
-                inputMode={InputMode.EMAIL}
-                autoCapitalize={AutoCapitalize.NONE}
-              />
+              <FormControl
+                size="md"
+                isInvalid={fieldState.invalid}
+                isRequired={true}
+              >
+                <FormControlLabel mb="$1">
+                  <FormControlLabelText>Email</FormControlLabelText>
+                </FormControlLabel>
+                <Input>
+                  <InputField
+                    placeholder="Email"
+                    defaultValue={field.value}
+                    onBlur={field.onBlur}
+                    onChangeText={field.onChange}
+                    keyboardType="email-address"
+                    autoComplete="email"
+                  />
+                </Input>
+                <FormControlError>
+                  <FormControlErrorIcon as={AlertCircleIcon} />
+                  <FormControlErrorText>
+                    {fieldState.error?.message}
+                  </FormControlErrorText>
+                </FormControlError>
+              </FormControl>
             );
           }}
         />
@@ -89,31 +120,46 @@ export default function LoginScreen({ navigation }) {
           name="password"
           render={({ field, fieldState, formState }) => {
             return (
-              <TextField
-                placeholder="Password"
-                value={field.value}
-                onChangeText={field.onChange}
-                onBlur={field.onBlur}
-                autoCapitalize={AutoCapitalize.NONE}
-                secureTextEntry
-              />
+              <FormControl
+                size="md"
+                isInvalid={fieldState.invalid}
+                isRequired={true}
+              >
+                <FormControlLabel mb="$1">
+                  <FormControlLabelText>Password</FormControlLabelText>
+                </FormControlLabel>
+                <Input>
+                  <InputField
+                    type="password"
+                    placeholder="Password"
+                    defaultValue={field.value}
+                    onBlur={field.onBlur}
+                    onChangeText={field.onChange}
+                  />
+                </Input>
+                <FormControlHelper>
+                  <FormControlHelperText>Keep it secret!</FormControlHelperText>
+                </FormControlHelper>
+                <FormControlError>
+                  <FormControlErrorIcon as={AlertCircleIcon} />
+                  <FormControlErrorText>
+                    {fieldState.error?.message}
+                  </FormControlErrorText>
+                </FormControlError>
+              </FormControl>
             );
           }}
         />
-      </View>
-      <Button text="Sign In" onPress={handleSubmit(login)} loading={loading} />
-      <Pressable onPress={() => goToForgotPassword()}>
-        <Text
-          style={[
-            Typography.body,
-            {
-              marginTop: Spacing.lg,
-            },
-          ]}
-        >
-          Forgot password?
-        </Text>
-      </Pressable>
+      </VStack>
+
+      <VStack space="md">
+        <Button onPress={handleSubmit(login)}>
+          <ButtonText>Submit</ButtonText>
+        </Button>
+        <Pressable onPress={() => goToForgotPassword()}>
+          <Text textAlign="center">Forgot password?</Text>
+        </Pressable>
+      </VStack>
     </ScrollViewLayout>
   );
 }

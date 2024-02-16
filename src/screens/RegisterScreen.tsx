@@ -1,11 +1,21 @@
-import Button from "@/components/Button";
-import { Spacing } from "@/config/spacing";
-import { Typography } from "@/config/typography";
 import { useAuth } from "@/hooks/useAuth";
 import FullScreenLayout from "@/layouts/FullScreenLayout";
 import Api from "@/services/Api";
+import {
+  Box,
+  Button,
+  ButtonIcon,
+  ButtonText,
+  CalendarDaysIcon,
+  HStack,
+  Heading,
+  Icon,
+  MailIcon,
+  Pressable,
+  Text,
+  VStack,
+} from "@gluestack-ui/themed";
 import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function RegisterScreen({ navigation }) {
@@ -38,53 +48,29 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <FullScreenLayout
-      contentStyle={{
-        alignItems: "center",
-        justifyContent: "flex-end",
-        paddingTop: Spacing.lg,
-        paddingBottom: Spacing.lg,
-        paddingLeft: Spacing.lg,
-        paddingRight: Spacing.lg,
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={Typography.jumbo}>Expo Template</Text>
-        <Text
-          style={[
-            Typography.body,
-            {
-              textAlign: "center",
-            },
-          ]}
-        >
-          This is a template app created with React Native and Expo
-        </Text>
-      </View>
-      <Button
-        text="Sign Up with Email"
-        iconName="mail"
-        onPress={signUp}
-        loading={loading}
-      />
-      <Pressable onPress={() => goToLogin()}>
-        <Text
-          style={[
-            Typography.body,
-            {
-              marginTop: Spacing.lg,
-            },
-          ]}
-        >
-          Already have an account? Sign In.
-        </Text>
-      </Pressable>
+    <FullScreenLayout>
+      <Box justifyContent="space-between" flex={1}>
+        <VStack space="md">
+          <Heading size="2xl" textAlign="center">
+            Expo Template
+          </Heading>
+          <Text textAlign="center">
+            This is a template app created with React Native and Expo
+          </Text>
+        </VStack>
+
+        <VStack space="md">
+          <Button onPress={signUp} size="lg">
+            <HStack space="md" alignItems="center">
+              <ButtonIcon as={MailIcon} />
+              <ButtonText>Sign Up With Email</ButtonText>
+            </HStack>
+          </Button>
+          <Pressable onPress={() => goToLogin()}>
+            <Text textAlign="center">Already have an account? Sign In.</Text>
+          </Pressable>
+        </VStack>
+      </Box>
     </FullScreenLayout>
   );
 }

@@ -1,39 +1,25 @@
-import { Text, View } from "react-native";
-import { Typography } from "@/config/typography";
+import { Text } from "react-native";
 import ScrollViewLayout from "@/layouts/ScrollViewLayout";
-import Api from "@/services/Api";
-import Button from "@/components/Button";
-import { Color } from "@/config/color";
-import { Spacing } from "@/config/spacing";
 import { useAuth } from "@/hooks/useAuth";
+import { Button, ButtonText, Center, Heading } from "@gluestack-ui/themed";
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
 
   return (
     <ScrollViewLayout>
-      <View
-        style={{
-          flex: 1,
-          flexGrow: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <Text style={Typography.jumbo}>Profile Screen</Text>
+      <Center>
+        <Heading size="2xl">Profile Screen</Heading>
         <Text>{JSON.stringify(user, null, 4)}</Text>
         <Button
-          text="Logout"
           onPress={() => {
             signOut();
           }}
-          containerStyle={{
-            marginTop: Spacing.xl,
-            backgroundColor: Color.secondary,
-          }}
-        />
-      </View>
+          marginTop={"$4"}
+        >
+          <ButtonText>Logout</ButtonText>
+        </Button>
+      </Center>
     </ScrollViewLayout>
   );
 }

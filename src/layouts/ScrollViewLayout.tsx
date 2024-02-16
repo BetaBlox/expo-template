@@ -1,36 +1,14 @@
-import { Spacing } from "@/config/spacing";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { Box } from "@gluestack-ui/themed";
+import { SafeAreaView, ScrollView } from "react-native";
 
-export default function ScrollViewLayout({
-  children,
-  containerStyle = {},
-  contentStyle = {},
-  backgroundColor,
-}: {
-  children: any;
-  containerStyle?: object;
-  contentStyle?: object;
-  backgroundColor?: string;
-}) {
+export default function ScrollViewLayout({ children }: { children: any }) {
   return (
-    <SafeAreaView
-      style={{
-        ...containerStyle,
-        backgroundColor,
-      }}
-    >
+    <SafeAreaView>
       <ScrollView alwaysBounceVertical={false}>
-        <View
-          style={{
-            padding: Spacing.md,
-            ...contentStyle,
-          }}
-        >
-          {children}
-        </View>
+        <Box padding="$4">{children}</Box>
 
         {/* Bottom spacer to offset scrolling around the tab bar */}
-        <View style={{ height: 100 }} />
+        <Box height={100} />
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,16 +1,21 @@
-import Button from "@/components/Button";
-import { Spacing } from "@/config/spacing";
-import { Typography } from "@/config/typography";
-import { Pressable, Text, View } from "react-native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import TextField, {
-  AutoComplete,
-  InputMode,
-  AutoCapitalize,
-} from "@/components/TextField";
-import { Color } from "@/config/color";
 import ScrollViewLayout from "@/layouts/ScrollViewLayout";
+import {
+  AlertCircleIcon,
+  Box,
+  Button,
+  ButtonText,
+  FormControl,
+  FormControlError,
+  FormControlErrorIcon,
+  FormControlErrorText,
+  FormControlLabel,
+  FormControlLabelText,
+  Heading,
+  Input,
+  InputField,
+} from "@gluestack-ui/themed";
 
 type FormData = {
   email: string;
@@ -69,12 +74,10 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   return (
     <ScrollViewLayout>
-      <Text style={Typography.jumbo}>Reset Password</Text>
-      <View
-        style={{
-          width: "100%",
-        }}
-      >
+      <Heading size="2xl" textAlign="center" marginBottom="$4">
+        Reset Password
+      </Heading>
+      <Box marginBottom={"$10"}>
         <Controller
           control={control}
           rules={{
@@ -83,24 +86,38 @@ export default function ForgotPasswordScreen({ navigation }) {
           name="email"
           render={({ field, fieldState, formState }) => {
             return (
-              <TextField
-                placeholder="Email"
-                value={field.value}
-                onChangeText={field.onChange}
-                onBlur={field.onBlur}
-                autoComplete={AutoComplete.EMAIL}
-                inputMode={InputMode.EMAIL}
-                autoCapitalize={AutoCapitalize.NONE}
-              />
+              <FormControl
+                size="md"
+                isInvalid={fieldState.invalid}
+                isRequired={true}
+              >
+                <FormControlLabel mb="$1">
+                  <FormControlLabelText>Email</FormControlLabelText>
+                </FormControlLabel>
+                <Input>
+                  <InputField
+                    placeholder="Email"
+                    defaultValue={field.value}
+                    onBlur={field.onBlur}
+                    onChangeText={field.onChange}
+                    keyboardType="email-address"
+                    autoComplete="email"
+                  />
+                </Input>
+                <FormControlError>
+                  <FormControlErrorIcon as={AlertCircleIcon} />
+                  <FormControlErrorText>
+                    {fieldState.error?.message}
+                  </FormControlErrorText>
+                </FormControlError>
+              </FormControl>
             );
           }}
         />
-      </View>
-      <Button
-        text="Send Code"
-        onPress={handleSubmit(sendPasswordResetEmail)}
-        loading={loading}
-      />
+      </Box>
+      <Button onPress={handleSubmit(sendPasswordResetEmail)}>
+        <ButtonText>Send Code</ButtonText>
+      </Button>
     </ScrollViewLayout>
   );
 }
