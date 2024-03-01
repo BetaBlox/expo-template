@@ -10,7 +10,8 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "APP_ENV": "development"
+        "APP_ENV": "development",
+        "API_URL": "https://localhost:3000/api"
       }
     },
     "preview": {
@@ -19,7 +20,8 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "API_URL": "https://nestjs-react-app-demo.up.railway.app/api"
       }
     },
     "production": {
@@ -27,7 +29,8 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "API_URL": "https://nestjs-react-app-demo.up.railway.app/api"
       }
     }
   },
