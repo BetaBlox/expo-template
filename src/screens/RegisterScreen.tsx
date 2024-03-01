@@ -1,6 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
 import FullScreenLayout from "@/layouts/FullScreenLayout";
-import Api from "@/services/Api";
 import {
   Box,
   Button,
@@ -19,7 +18,7 @@ import { useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function RegisterScreen({ navigation }) {
-  const { loadUserFromSession } = useAuth();
+  const { signup, loadFromStorage } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const signUp = async () => {
@@ -29,9 +28,10 @@ export default function RegisterScreen({ navigation }) {
     };
 
     setLoading(true);
+
     try {
-      await Api.auth.register(payload);
-      await loadUserFromSession();
+      await signup(payload);
+      await loadFromStorage();
     } catch (error: any) {
       console.error(error);
       Toast.show({

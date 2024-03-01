@@ -62,10 +62,10 @@ const Tabs = () => (
 );
 
 export default function Router() {
-  const { user, isLoaded, loadUserFromSession } = useAuth();
+  const { user, isLoaded, loadFromStorage } = useAuth();
 
   useEffect(() => {
-    loadUserFromSession();
+    loadFromStorage();
   }, []);
 
   useEffect(() => {

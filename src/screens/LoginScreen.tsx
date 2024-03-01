@@ -1,14 +1,7 @@
-import { View } from "react-native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import TextField, {
-  AutoComplete,
-  InputMode,
-  AutoCapitalize,
-} from "@/components/TextField";
 import { useAuth } from "@/hooks/useAuth";
 import Toast from "react-native-toast-message";
-import Api from "@/services/Api";
 import ScrollViewLayout from "@/layouts/ScrollViewLayout";
 import {
   Heading,
@@ -35,7 +28,7 @@ type FormData = {
   password: string;
 };
 export default function LoginScreen({ navigation }) {
-  const { loadUserFromSession } = useAuth();
+  const { signin, loadFromStorage } = useAuth();
   const [loading, setLoading] = useState(false);
   const {
     control,
@@ -50,18 +43,18 @@ export default function LoginScreen({ navigation }) {
 
   const login = async (data: FormData) => {
     setLoading(true);
-    try {
-      await Api.auth.signInWithEmailAndPassword(data.email, data.password);
-      await loadUserFromSession();
-    } catch (error: any) {
-      console.error(error);
+
+    const res = await signin(data.email, data.password);
+
+    if (res.ok) {
+      await loadFromStorage();
+    } else {
+      const json = await res.json();
+      console.error(json);
       Toast.show({
         type: "error",
-        text1: "Unable to sign in",
-        text2: error.message,
+        text1: json.message,
       });
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button, ButtonText, Center, Heading } from "@gluestack-ui/themed";
 
 export default function ProfileScreen() {
-  const { user, signOut } = useAuth();
+  const { user, signout } = useAuth();
 
   return (
     <ScrollViewLayout>
@@ -13,7 +13,7 @@ export default function ProfileScreen() {
         <Text>{JSON.stringify(user, null, 4)}</Text>
         <Button
           onPress={() => {
-            signOut();
+            signout();
           }}
           marginTop={"$4"}
         >
