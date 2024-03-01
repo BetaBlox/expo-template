@@ -85,3 +85,5 @@ In running any of the above commands, your app build will be queued in the EAS p
 ## Deployment
 
 Deployment for mobile applications can be tricky. This section of the docs is still a work in progress. More info to come here as we find more consistent steps to document.
+
+We should be able to leverage [EAS Submit in some fashion](https://docs.expo.dev/submit/introduction/). They even have a section about [automation submissions](https://docs.expo.dev/build/automate-submissions/).
